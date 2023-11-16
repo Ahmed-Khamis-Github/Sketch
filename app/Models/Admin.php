@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Concerns\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 class Admin extends User
 {
-    use HasFactory;
+    use HasFactory , HasRoles;
 
     protected $fillable = [
         'name',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('dashboard.users.create') ;
+        $roles = Role::all() ;
+        return view('dashboard.users.create',compact('roles')) ;
     }
 
     /**
@@ -37,13 +39,14 @@ class UserController extends Controller
          
         $image = $this->uploadImage($request);
 
-        User::create([
+       $user= User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'image'=>$image
         ]);
 
+        $user->roles()->attach($request->roles)  ;
         
 
 
@@ -63,7 +66,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('dashboard.users.edit',compact('user')) ;
+        $roles = Role::all();
+        $user_roles = $user->roles()->pluck('id')->toArray();
+        
+        return view('dashboard.users.edit',compact('user','roles','user_roles')) ;
     }
 
     /**

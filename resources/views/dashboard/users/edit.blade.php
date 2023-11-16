@@ -69,9 +69,19 @@
 			</div>
 			@if ($user->image)
 				<li class="list-inline-item">
-					<img id="previewImage" src="{{ asset('uploads/' . $user->image) }}" height="80px">
+					<img id="previewImage" src="{{ asset('uploads/' . $user->image) }}" height="200px">
 				</li>
 			@endif
+<br>
+<label for="">Role</label>
+			@foreach ($roles as $role)
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" @checked(in_array($role->id, old('roles', $user_roles)))>
+				<label class="form-check-label">
+					{{ $role->name }}
+				</label>
+			</div>
+			@endforeach
 
 			<button type="submit" class="btn btn-primary">Update</button>
 

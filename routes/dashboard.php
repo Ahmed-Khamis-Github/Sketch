@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProjectController;
+use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\Dashboard\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,9 @@ Route::group([
 
 
     Route::resource('projects',ProjectController::class) ;
+
+
+    Route::resource('roles',RolesController::class) ;
 
 
 

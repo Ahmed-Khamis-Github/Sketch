@@ -22,9 +22,10 @@ Categories
 </div>
 @endif
    
+@can('categories.create')
 
 <a href="{{ route('dashboard.categories.create') }}" class="btn  btn-primary  mb-2">create</a>
-
+@endcan
 
 <table class="table table-striped projects">
 

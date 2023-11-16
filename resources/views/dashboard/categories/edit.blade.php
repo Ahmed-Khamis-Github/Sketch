@@ -2,7 +2,7 @@
 
 @section('page-title','Update Category')
 
- 
+
 
 @section('breadcrumb')
     @parent

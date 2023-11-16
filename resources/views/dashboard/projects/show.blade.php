@@ -44,7 +44,7 @@
               <td>
                 {{ $project->id }}
               </td>
-              <td><a href={{ route('dashboard.projects.show',$project->id) }} >{{ $project->name }}</a></td>
+              <td>{{ $project->name }}</td>
   
                 <td>
                     <a> {{ $project->deadline ?? 'No Deadline' }}

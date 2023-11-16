@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectRequest extends FormRequest
 {
@@ -11,7 +12,10 @@ class ProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        if ($this->route('project')) {
+            return Gate::allows('projects.update');
+        }
+        return Gate::allows('projects.create');
     }
 
     /**

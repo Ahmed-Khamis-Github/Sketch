@@ -21,6 +21,7 @@ return [
     'roles.delete'=>'Delete roles' ,
     
 
+    'assign.view'=>'view assigned' ,
 
 
     

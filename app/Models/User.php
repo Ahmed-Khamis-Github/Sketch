@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class User extends Authenticatable
 {
@@ -45,6 +47,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function scopeSearch(Builder $builder,$filters){
+
+        $builder->when($filters['search'] ?? false,function($builder ,$value){
+                 $builder->where('name','like',"%$value%") ;
+            
+        }) ;
+
+    }
+
 
     public function projects()
     {

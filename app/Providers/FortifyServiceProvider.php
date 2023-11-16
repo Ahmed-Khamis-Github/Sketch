@@ -27,6 +27,7 @@ class FortifyServiceProvider extends ServiceProvider
         {
             Config::set('fortify.guard','admin') ;
             Config::set('fortify.prefix','admin') ;
+            Config::set('fortify.home','/dashboard/users') ;
         }
     }
 

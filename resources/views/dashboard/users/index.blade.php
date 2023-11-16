@@ -24,13 +24,36 @@ Users
    
 
 <a href="{{ route('dashboard.users.create') }}" class="btn  btn-primary  mb-2">create</a>
+<a href="{{ route('dashboard.user.assignments') }}" class="ml-2 btn  btn-secondary  mb-2">Assign For Project</a>
+
+ 
+<div class="container-fluid mb-2">
+    <h2 class="text-center display-6">Search</h2>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form  action="{{ URL::current() }}" method="GET">
+                <div class="input-group">
+
+                    <input type="search" class="form-control form-control-lg" name="search" value="{{ request('search') }}"
+                        placeholder="Search For User">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-lg btn-default">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <table class="table table-striped projects">
 
   <thead>
       <tr>
-          <th style="width: 5%">
+          <th style="width: 1%">
             #
           </th>
           <th style="width: 20%">
@@ -39,7 +62,7 @@ Users
           <th style="width: 30%">
               Email
           </th>
-          <th style="width: 30%">
+          <th style="width: 5%">
               Image
           </th>
           <th style="width: 30% ; text-align:center">
@@ -62,7 +85,7 @@ Users
               
               <td>
                 @if($user->image)
-                <img src="{{ asset('uploads/'.$user->image) }}" alt="" height="50px">
+                <img src="{{ asset('uploads/'.$user->image) }}" alt="" height="100px">
                 @else
                 <img src="https://winaero.com/blog/wp-content/uploads/2017/12/User-icon-256-blue.png" alt="" height="50px">
             @endif
@@ -77,7 +100,7 @@ Users
                       Edit
                   </a>
 
-                  
+                 
 
                   <form method="post" action="{{ route('dashboard.users.destroy', $user->id) }}"
                       style="display: inline-block ; margin:0">

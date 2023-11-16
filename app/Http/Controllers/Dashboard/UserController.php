@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +20,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users =User::paginate(8) ;
+        Gate::authorize('users.view');
+        
+        $request = request();
+
+        $users =User::search($request->query())->paginate(8) ;
     
         return view('dashboard.users.index',compact('users')) ;
     }
@@ -27,6 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        Gate::authorize('users.create');
+
         $roles = Role::all() ;
         return view('dashboard.users.create',compact('roles')) ;
     }
@@ -66,6 +75,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        Gate::authorize('users.update');
+
         $roles = Role::all();
         $user_roles = $user->roles()->pluck('id')->toArray();
         
@@ -100,6 +111,7 @@ class UserController extends Controller
         }
 
         $user->update($data) ;
+        $user->roles()->sync($request->roles);
 
         return redirect()->route('dashboard.users.index')->with('success','User Updated Successfully') ;
      }
@@ -109,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy( User $user)
     {
+        Gate::authorize('users.delete');
+
         if ($user->image) {
             Storage::disk('uploads')->delete($user->image);
         }
@@ -130,5 +144,38 @@ class UserController extends Controller
         $path = $file->store('users', 'uploads');
 
         return $path;
+    }
+
+
+    public function userAssignments()
+    {
+        $users = User::all();
+        $projects = Project::all();
+
+        return view('dashboard.users.assign', compact('users', 'projects'));
+    }
+
+    public function assignUser(Request $request)
+    {
+        $userId = $request->input('user_id');
+        $projectId = $request->input('project_id');
+
+        $user = User::findOrFail($userId);
+        $project = Project::findOrFail($projectId);
+
+        $user->projects()->attach($project);
+
+        return redirect()->route('dashboard.users.index')->with('success','User Assigned Successfully') ;
+    }
+
+
+    public function myProjects()
+    {
+        Gate::authorize('assign.view');
+
+        $user = Auth::user();
+         $projects = $user->projects;
+ 
+        return view('dashboard.assigned-projects.index', compact('projects'));
     }
 }

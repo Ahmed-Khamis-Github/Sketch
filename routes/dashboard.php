@@ -15,6 +15,10 @@ Route::group([
 
 ],function(){
 
+
+    Route::get('users/user-assignments', [UserController::class,'userAssignments'])->name('user.assignments');
+    Route::post('users/assign-user', [UserController::class,'assignUser'])->name('user.assign');
+
     Route::resource('users',UserController::class) ;
 
     Route::resource('categories',CategoryController::class) ;
@@ -26,6 +30,7 @@ Route::group([
 
     Route::resource('projects',ProjectController::class) ;
 
+    Route::get('my-projects', [UserController::class,'myProjects'])->name('user.projects');
 
     Route::resource('roles',RolesController::class) ;
 

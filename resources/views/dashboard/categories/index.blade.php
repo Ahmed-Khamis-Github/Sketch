@@ -62,10 +62,8 @@ Categories
                 </a>
               </td>
               
-              <td>
-               {{ $category->created_at }}
+              <td>{{ \Carbon\Carbon::parse($category->created_at)->format('Y-m-d') }}</td>
 
-            </td>
 
               <td class="project-actions text-center  p-0">
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(8) ;
+        Gate::authorize('categories.view');
+
+        $categories = Category::paginate(6) ;
         
         return view('dashboard.categories.index',compact('categories')) ;
     }
@@ -24,6 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('categories.create');
+
         return view('dashboard.categories.create') ;
     }
 
@@ -50,6 +55,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        Gate::authorize('categories.update');
+
         return view('dashboard.categories.edit',compact('category')) ;
     }
 
@@ -68,6 +75,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        Gate::authorize('categories.delete');
         $category->delete() ;
         return redirect()->route('dashboard.categories.index')->with('success','Category Deleted Successfully') ;
 

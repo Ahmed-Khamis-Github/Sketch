@@ -7,6 +7,7 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Category;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -15,6 +16,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        Gate::authorize('projects.view');
+
         $projects = Project::with('category')->paginate(8) ;
         
         return view('dashboard.projects.index',compact('projects')) ;
@@ -25,6 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        Gate::authorize('projects.create');
+
         $categories= Category::all() ;
         return view('dashboard.projects.create',compact('categories')) ;
     }
@@ -34,6 +39,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        
         Project::create($request->all()) ;
 
         return redirect()->route('dashboard.projects.index')->with('success','Project Created Successfully') ;
@@ -53,6 +59,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        Gate::authorize('projects.update');
+
         $categories= Category::all() ;
         return view('dashboard.projects.edit',compact('project','categories')) ;
 
@@ -73,6 +81,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        Gate::authorize('projects.delete');
+
         $project->delete() ;
         return redirect()->route('dashboard.projects.index')->with('success','Project Deleted Successfully') ;
 

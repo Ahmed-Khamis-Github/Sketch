@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{asset('assets/dashboard/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+      <span class="brand-text font-weight-light">Sketch</span>
     </a>
 
     <!-- Sidebar -->
@@ -37,7 +37,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          
-          
+          @can('users.view')
           <li class="nav-item">
             <a href="{{ route('dashboard.users.index') }}" class="nav-link {{ request()->routeIs('dashboard.users.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user"></i>
@@ -46,7 +46,9 @@
                </p>
             </a>
           </li>
+          @endcan
 
+          @can('categories.view')
           <li class="nav-item">
             <a href="{{ route('dashboard.categories.index') }}"
                 class="nav-link {{ request()->routeIs('dashboard.categories.*') ? 'active' : '' }}">
@@ -57,28 +59,49 @@
                 </p>
             </a>
         </li>
+        @endcan
 
+        @can('projects.view')
         <li class="nav-item">
           <a href="{{ route('dashboard.projects.index') }}"
               class="nav-link {{ request()->routeIs('dashboard.projects.*') ? 'active' : '' }}">
 
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                   Projects
               </p>
           </a>
       </li>
+      @endcan
 
+      @can('roles.view')
       <li class="nav-item">
         <a href="{{ route('dashboard.roles.index') }}"
             class="nav-link {{ request()->routeIs('dashboard.roles.*') ? 'active' : '' }}">
 
-            <i class="nav-icon fas fa-th"></i>
+            <i class="far fa-circle nav-icon"></i>
             <p>
                 roles
             </p>
         </a>
     </li>
+    @endcan
+
+@can('assign.view')
+<li class="nav-item">
+  <a href="{{ route('dashboard.user.projects') }}"
+      class="nav-link {{ request()->routeIs('dashboard.user.projects') ? 'active' : '' }}">
+
+      <i class="nav-icon fas fa-th"></i>
+      <p>
+        Assigned Projects
+      </p>
+  </a>
+</li>
+@endcan
+    
+
+    
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

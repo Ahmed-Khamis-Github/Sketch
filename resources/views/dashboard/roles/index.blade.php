@@ -38,7 +38,7 @@
                     <td>{{ $role->id }}</td>
                     <td>{{  $role->name }}</td>
                     
-                    <td>{{ $role->created_at }}</td>
+                    <td>{{ \Carbon\Carbon::parse($role->created_at)->format('Y-m-d') }}</td>
 
                     <td>
                              

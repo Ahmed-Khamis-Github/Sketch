@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RolesRequest;
 use App\Models\Role;
-use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
@@ -14,6 +15,8 @@ class RolesController extends Controller
      */
     public function index()
     {
+        Gate::authorize('roles.view');
+
         $roles = Role::paginate(8) ;
         return view('dashboard.roles.index',compact('roles')) ;
 
@@ -24,6 +27,8 @@ class RolesController extends Controller
      */
     public function create()
     {
+        Gate::authorize('roles.create');
+
         $role=new Role() ;
         return view('dashboard.roles.create',compact('role')) ;
 
@@ -55,6 +60,8 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
+        Gate::authorize('roles.update');
+
         $role_abilities=$role->abilities()->pluck('type','ability')->toArray() ;
         // dd($role_abilities) ;
         return view('dashboard.roles.edit',compact('role','role_abilities')) ;
@@ -77,6 +84,8 @@ class RolesController extends Controller
    
     public function destroy($id)
     {
+        Gate::authorize('roles.delete');
+
         Role::destroy($id);
         return redirect()
             ->route('dashboard.roles.index')

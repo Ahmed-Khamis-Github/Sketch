@@ -47,9 +47,8 @@
                   <a>{{ $category->description }}</a>
               </td>
            
-             <td>
-                {{ $category->created_at }}
-             </td>
+              <td>{{ \Carbon\Carbon::parse($category->created_at)->format('Y-m-d') }}</td>
+
 
             
           </tr>

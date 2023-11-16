@@ -22,7 +22,7 @@
    
 
 <a href="{{ route('dashboard.projects.create') }}" class="btn  btn-primary  mb-2">create</a>
-<a href="{{ route('dashboard.projects.trash') }}" class="ml-2 btn  bg-gradient-dark btn-md mb-2">Trash Projects</a>
+<a href="{{ route('dashboard.projects.trash') }}" class="ml-2 btn  bg-gradient-secondary btn-md mb-2">Trash Projects</a>
 
 
 

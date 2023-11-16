@@ -43,21 +43,20 @@
             <td>
               {{ $user->id }}
             </td>
-            <td><a href={{ route('dashboard.users.show',$user->id) }} >{{ $user->name }}</a></td>
+            <td>{{ $user->name }}</td>
 
               <td>
                   <a>{{ $user->email }}</a>
               </td>
              <td>
                 @if($user->image)
-                <img src="{{ asset('uploads/'.$user->image) }}" alt="" height="50px">
+                <img src="{{ asset('uploads/'.$user->image) }}" alt="" height="200px">
                 @else
                 <img src="https://winaero.com/blog/wp-content/uploads/2017/12/User-icon-256-blue.png" alt="" height="50px">
             @endif
              </td>
-             <td>
-                {{ $user->created_at }}
-             </td>
+             <td>{{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}</td>
+
 
             
           </tr>

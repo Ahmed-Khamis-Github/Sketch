@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class RolesRequest extends FormRequest
 {
@@ -11,7 +12,11 @@ class RolesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // if ($this->route('role')) {
+        //     return Gate::allows('roles.update');
+        // }
+        // return Gate::allows('roles.create');
+        return true ;
     }
 
     /**
